@@ -1,0 +1,175 @@
+<div class="imagen">
+    <img src="https://firebasestorage.googleapis.com/v0/b/istateca.appspot.com/o/logos%2Flogo%20normal%20peque%C3%B1o.png?alt=media&token=59a16c73-3229-4ba7-81be-567aae799d61"
+        height="60" width="200" style="margin-left: 10%; margin-top: 1%;">
+</div>
+
+<body class="elemento">
+    <div class="card">
+        <h1>Lista Donante</h1>
+        <form class="buscar">
+            <div class="contBuscar">
+                <input class="form-control me-2" #buscar2 type="search" placeholder="Buscar Donante" aria-label="Buscar"
+                    (keyup)="onKeydownEvent($event, buscar2.value)">
+                <button class="btn" (click)="buscarDonante(buscar2.value)"> <img
+                        src="https://firebasestorage.googleapis.com/v0/b/istateca.appspot.com/o/Iconos%2Fbusqueda.png?alt=media&token=2b59078d-0ef5-4fa4-85c6-396ea7c1c97c"></button>
+                <button (click)="registroDonante()">Crear Donante</button>
+            </div>
+
+
+            <div class="contBuscar">
+                <input class="form-control me-2" #buscar3 type="search" placeholder="Buscar Etiqueta" aria-label="Buscar"
+                    (keyup)="onKeydownEvent2($event, buscar3.value)">
+                <button class="btn"(click)="buscarEtiqueta(buscar3.value)"><img
+                        src="https://firebasestorage.googleapis.com/v0/b/istateca.appspot.com/o/Iconos%2Fbusqueda.png?alt=media&token=2b59078d-0ef5-4fa4-85c6-396ea7c1c97c"></button>
+                <button (click)="registroetiqueta() ">Crear Etiqueta</button>
+            </div>
+
+        </form>
+        <div class="contenedor">
+            <div class="tablas">
+                <table class="table">
+                    <thead class="cabezera">
+                        <tr>
+                            <th colspan="3">Donantes</th>
+                        </tr>
+                    </thead>
+                    <thead class="subcabezera">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombres</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngIf="buscarD==false">
+                        <tr *ngFor="let donante of Donantes">
+                            <td>{{donante.id}}</td>
+                            <td>{{donante.nombre}}</td>
+                            <td><button (click)="AbrirDonante(donante)" style="width: auto;">Modificar</button></td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="buscarD==true">
+                        <tr *ngFor="let donante of Donantes">
+                            <td>{{donante.id}}</td>
+                            <td>{{donante.nombre}}</td>
+                            <td><button (click)="AbrirDonante(donante)" style="width: auto;">Modificar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="overlay99" id="overlay97">
+                <div class="popup99" id="popup97">
+                    <h1>Modificar Donante</h1>
+                    <form (ngSubmit)="EditarDonante(donanteEdit)">
+                        <br>
+                        <div class="input-box">
+                            <span class="details">Nombre:</span>
+                            <input type="text" class="form-control" [(ngModel)]="donanteEdit.nombre" name="nombre"
+                                required>
+                        </div>
+                        <br>
+
+                        <div style="display: flex;">
+                            <button type="submit">
+                                Guardar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-folder-check" viewBox="0 0 16 16">
+                                    <path
+                                        d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z" />
+                                    <path
+                                        d="M15.854 10.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.707 0l-1.5-1.5a.5.5 0 0 1 .707-.708l1.146 1.147 2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                </svg>
+                            </button>
+                            <button type="button" style="margin-left: 60%;" (click)="cerrarpopup3()">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+
+            <div class="tablas">
+                <table class="table">
+                    <thead class="cabezera">
+                        <tr>
+                            <th colspan="4">Tipos de Etiquetas</th>
+                        </tr>
+                    </thead>
+                    <thead class="subcabezera">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody class="text-center" *ngIf="buscarE==false">
+                        <tr *ngFor="let Etiqueta of Etiquetas">
+                            <td>{{Etiqueta.id}}</td>
+                            <td>{{Etiqueta.nombre}}</td>
+                            <td *ngIf="Etiqueta.activo==true; else elseBlock">Activo</td>
+                            <ng-template #elseBlock>
+                                <td>Inactivo</td>
+                            </ng-template>
+                            <td><button (click)="AbrirEtiqueta(Etiqueta)" style="width: auto;">Modificar</button></td>
+                        </tr>
+                    </tbody>
+                    <tbody class="text-center" *ngIf="buscarE==true">
+                        <tr *ngFor="let Etiqueta of Etiquetas">
+                            <td>{{Etiqueta.id}}</td>
+                            <td>{{Etiqueta.nombre}}</td>
+                            <td>{{getNombreEstado(Etiqueta.activo)}}</td>
+                            <td><button (click)="AbrirEtiqueta(Etiqueta)" style="width: auto;">Modificar</button></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="overlay99" id="overlay96">
+        <div class="popup99" id="popup96">
+            <h1>Editar Etiqueta</h1>
+                <form (ngSubmit)="EditarEtiqueta(etiquetaEdit)">
+                    <br>
+                    <div class="input-box">
+                        <span class="details">Nombre:</span>
+                        <input type="text" class="form-control" [(ngModel)]="etiquetaEdit.nombre" name="nombre"
+                            required>
+                    </div>
+                    <div class="input-box">
+                        <span class="details">Estado:</span>
+                        <input type="text" class="input3 form-control text-center" name="correo"
+                            value="Estado Anterior: {{estado}}" disabled>
+                        <input type="radio" name="flexRadioDefault" value="true" id="activo"
+                            [(ngModel)]="etiquetaEdit.activo" required>
+                        <label class="form-check-label" for="flexRadioDefault1">Activo</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="radio" name="flexRadioDefault" value="false" id="inactivo"
+                            [(ngModel)]="etiquetaEdit.activo" required>
+                        &nbsp;&nbsp;
+                        <label class="form-check-label" for="flexRadioDefault2">Inactivo</label>
+                    </div>
+                    <br>
+
+                    <div style="display: flex;">
+                        <button type="submit">
+                            Guardar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-folder-check" viewBox="0 0 16 16">
+                                <path
+                                    d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z" />
+                                <path
+                                    d="M15.854 10.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.707 0l-1.5-1.5a.5.5 0 0 1 .707-.708l1.146 1.147 2.646-2.647a.5.5 0 0 1 .708 0z" />
+                            </svg>
+                        </button>
+                        <button type="button" style="margin-left: 60%;" (click)="cerrarpopup2()">Cancelar</button>
+                    </div>
+                </form>
+        </div>
+
+    </div>
+</body>

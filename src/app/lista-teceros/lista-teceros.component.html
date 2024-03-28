@@ -1,0 +1,91 @@
+<div class="imagen">
+    <img src="https://firebasestorage.googleapis.com/v0/b/istateca.appspot.com/o/logos%2Flogo%20normal%20peque%C3%B1o.png?alt=media&token=59a16c73-3229-4ba7-81be-567aae799d61"
+        height="60" width="200" style="margin-left: 10%; margin-top: 1%;">
+</div>
+<!--FORMULARIO-->
+
+
+
+
+
+<body class="elemento">
+    <div class="card">
+        <h1>Lista de personas agenas ha la institución</h1>
+        <form class="buscar">
+            <input class="form-control me-2" (keyup)="onKeydownEvent($event, buscaer.value)" #buscaer type="search"
+              placeholder="Buscar por cedula" aria-label="Buscar" style="background-color: #e5e7e8; border-color: #2e2f5e" />
+            
+          </form>
+        <div class="contenedor">
+            <table class="table">
+                <thead class="text-center cabezera">
+                    <tr>
+                        <th>Cédula</th>
+                        <th>Nombre</th>
+                        <th>Correo</th>
+                        <th>Celular</th>
+                        <th>Acciones</th>
+                    </tr>
+
+                </thead>
+                <tbody class="text-center" *ngIf=normal>
+                    <tr *ngFor="let persona of personasTipo2">
+                        <td>{{ persona.cedula }}</td>
+                        <td>{{ persona.nombre }}</td>
+                        <td>{{ persona.correo }}</td>
+                        <td>{{ persona.telefono }}</td>
+                        <td><button (click)="AbrirEditar(persona)">Modificar</button></td>
+                    </tr>
+                </tbody>
+
+                <tbody class="text-center" *ngIf="buscar">
+                    <tr >
+                        <td>{{ personasTipo2b.cedula }}</td>
+                        <td>{{ personasTipo2b.nombre }}</td>
+                        <td>{{ personasTipo2b.correo }}</td>
+                        <td>{{ personasTipo2b.telefono }}</td>
+                        <td><button (click)="AbrirEditar(personasTipo2b)">Modificar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="overlay99" id="overlay96">
+        <div class="popup99" id="popup96">
+            <h1>Modificar Tercero</h1>
+            <form (ngSubmit)="Editar(terceroEdit)">
+                <br>
+                <div class="input-box">
+                    <span class="details">Cédula:</span>
+                    <input type="text" class="form-control" disabled [(ngModel)]="terceroEdit.cedula" name="cedula" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Nombre:</span>
+                    <input type="text" class="form-control" [(ngModel)]="terceroEdit.nombre" name="nombre" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Correo:</span>
+                    <input type="text" class="form-control" [(ngModel)]="terceroEdit.correo" name="correo" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Teléfono:</span>
+                    <input type="text" class="form-control" [(ngModel)]="terceroEdit.telefono" name="telefono" required>
+                </div>
+                <br>
+
+                <div style="display: flex;">
+                    <button type="submit">
+                        Guardar <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-folder-check" viewBox="0 0 16 16">
+                            <path
+                                d="m.5 3 .04.87a1.99 1.99 0 0 0-.342 1.311l.637 7A2 2 0 0 0 2.826 14H9v-1H2.826a1 1 0 0 1-.995-.91l-.637-7A1 1 0 0 1 2.19 4h11.62a1 1 0 0 1 .996 1.09L14.54 8h1.005l.256-2.819A2 2 0 0 0 13.81 3H9.828a2 2 0 0 1-1.414-.586l-.828-.828A2 2 0 0 0 6.172 1H2.5a2 2 0 0 0-2 2zm5.672-1a1 1 0 0 1 .707.293L7.586 3H2.19c-.24 0-.47.042-.683.12L1.5 2.98a1 1 0 0 1 1-.98h3.672z" />
+                            <path
+                                d="M15.854 10.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.707 0l-1.5-1.5a.5.5 0 0 1 .707-.708l1.146 1.147 2.646-2.647a.5.5 0 0 1 .708 0z" />
+                        </svg>
+                    </button>
+                    <button type="button" style="margin-left: 60%;" (click)="cerrarpopup2()">Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
